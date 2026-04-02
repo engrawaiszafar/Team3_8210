@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CK Real Estate Admin Login</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .left-panel {
+            width: 35%;
+            background: #1900a8;
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .left-panel h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .left-panel h3 {
+            color: #79c7ff;
+            font-weight: normal;
+            margin-top: 10px;
+        }
+
+        .left-panel .big-text {
+            font-size: 52px;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-top: 80px;
+        }
+
+        .left-panel .small-text {
+            color: #79c7ff;
+            font-size: 24px;
+            margin-top: 30px;
+            max-width: 400px;
+        }
+
+        .right-panel {
+            width: 65%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            width: 420px;
+        }
+
+        .login-box h2 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .login-box p {
+            color: #777;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .login-box hr {
+            margin: 25px 0 35px 0;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            margin-top: 18px;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .error-box {
+            margin-top: 18px;
+            background: #f8d7da;
+            color: #842029;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 16px;
+            background: #e9e9e9;
+            border: 1px solid #bdbdbd;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #dcdcdc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div>
+                <h1>CK Real Estate</h1>
+                <h3>Admin portal</h3>
+
+                <div class="big-text">Manage your<br>listings here</div>
+                <div class="small-text">
+                    Update properties, manage your profile, and track user trends
+                </div>
+            </div>
+            <div><hr></div>
+        </div>
+
+        <div class="right-panel">
+            <div class="login-box">
+                <h2>Welcome back, Carlos</h2>
+                <p>Log in</p>
+                <hr>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Enter your username" required>
+
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Enter your password" required>
+
+                    {% if error_message %}
+                        <div class="error-box">{{ error_message }}</div>
+                    {% endif %}
+
+                    <button type="submit" class="login-btn">Log In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

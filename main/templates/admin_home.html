@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Home</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #efefef;
+        }
+
+        .topbar {
+            background: #f8f8f8;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .topbar-left {
+            font-weight: bold;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            text-decoration: none;
+            background: #efefef;
+            border: 1px solid #bbb;
+            padding: 10px 18px;
+            border-radius: 10px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 60px;
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            width: 500px;
+            margin: 60px auto;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 6px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">CK Real Estate - Admin</div>
+        <div class="topbar-right">
+            <div>
+                <strong>{{ request.user.username }}</strong><br>
+                <small>Carlos Kosala</small>
+            </div>
+            <a href="{% url 'logout_confirm' %}" class="logout-btn">Log out</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="card">
+            <h1>Welcome to the Admin Panel</h1>
+            <p>You are now logged in.</p>
+        </div>
+    </div>
+</body>
+</html>

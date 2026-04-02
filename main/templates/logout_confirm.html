@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Logout</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #efefef;
+        }
+
+        .topbar {
+            background: #f8f8f8;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .topbar-left {
+            font-weight: bold;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .modal-card {
+            background: white;
+            width: 460px;
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 8px rgba(0,0,0,0.08);
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 35px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid #bbb;
+            background: #efefef;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">CK Real Estate - Admin</div>
+        <div class="topbar-right">
+            <div>
+                <strong>{{ request.user.username }}</strong><br>
+                <small>Carlos Kosala</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrap">
+        <div class="modal-card">
+            <h2>Are you sure you want to<br>log out of admin panel?</h2>
+
+            <div class="btn-row">
+                <a href="{% url 'admin_home' %}" class="btn">Cancel</a>
+
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Confirm Log out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
