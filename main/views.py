@@ -18,16 +18,14 @@ def admin_login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect('admin_home')
+            return redirect('view_listings')
         else:
             error_message = 'Invalid username or password. Please try again.'
 
     return render(request, 'admin_login.html', {'error_message': error_message})
 
 
-@login_required
-def admin_home(request):
-    return render(request, 'admin_home.html')
+
 
 
 @login_required
@@ -41,3 +39,13 @@ def logout_view(request):
         logout(request)
         return redirect('admin_login')
     return redirect('logout_confirm')
+
+
+@login_required
+def view_listings(request):
+    return render(request, 'view_listings.html')
+
+
+@login_required
+def edit_property(request):
+    return render(request, 'edit_property.html')

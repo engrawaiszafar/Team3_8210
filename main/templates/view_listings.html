@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Property Listings</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            padding: 20px 40px;
+        }
+
+        .top-nav {
+            text-align: right;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .top-nav a {
+            text-decoration: underline;
+            color: #333;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .header-title {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .logo-box {
+            background: #888;
+            color: white;
+            width: 120px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .logo-ck {
+            font-size: 48px;
+            line-height: 1;
+        }
+
+        .logo-text {
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        th {
+            background: #ffffff;
+            padding: 15px;
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 2px solid #efefef;
+        }
+
+        td {
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+            border-bottom: 1px solid #efefef;
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            background: #e0e0e0;
+            padding: 6px 12px;
+            display: inline-block;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .status-active {
+            color: #00cc00;
+        }
+
+        .status-sold {
+            color: black;
+        }
+
+        .btn-edit {
+            background: #e0e0e0;
+            color: black;
+            text-decoration: none;
+            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 14px;
+            gap: 5px;
+        }
+
+        .btn-edit:hover {
+            background: #d0d0d0;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .pagination-box {
+            background: #e0e0e0;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .arrow {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="#">Add a listing</a>,
+        <a href="#">Update Omaha Page</a>,
+        <a href="#">Update Profile</a>,
+        <a href="{% url 'logout_confirm' %}">Logout</a>
+    </div>
+
+    <div class="header-container">
+        <div class="header-title">Property Listings</div>
+        <div class="logo-box">
+            <div class="logo-ck">CK</div>
+            <div class="logo-text">Real Estate</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>Price</th>
+                <th>Home Type</th>
+                <th>Status</th>
+                <th>Visibility ▾</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>123 66th St</td>
+                <td>$250,000</td>
+                <td>House</td>
+                <td><span class="status-badge status-active">Active</span></td>
+                <td>Visible</td>
+                <td><a href="{% url 'edit_property' %}" class="btn-edit">📝 Edit</a></td>
+            </tr>
+            <tr>
+                <td>356 Mapple Ave</td>
+                <td>$50,000</td>
+                <td>Condo</td>
+                <td><span class="status-badge status-sold">Sold</span></td>
+                <td>Hidden</td>
+                <td><a href="{% url 'edit_property' %}" class="btn-edit">📝 Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <span class="arrow">◀</span>
+        <div class="pagination-box">Previous | Next</div>
+        <span class="arrow">▶</span>
+    </div>
+</body>
+</html>

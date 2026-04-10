@@ -83,7 +83,7 @@
             <h2>Are you sure you want to<br>log out of admin panel?</h2>
 
             <div class="btn-row">
-                <a href="{% url 'admin_home' %}" class="btn">Cancel</a>
+                <a href="{% url 'view_listings' %}" class="btn">Cancel</a>
 
                 <form method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
