@@ -116,14 +116,51 @@
         .login-btn:hover {
             background: #dcdcdc;
         }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .logo-box {
+            background: #888;
+            color: white;
+            width: 120px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .logo-ck {
+            font-size: 48px;
+            line-height: 1;
+        }
+
+        .logo-text {
+            font-size: 14px;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="left-panel">
             <div>
-                <h1>CK Real Estate</h1>
-                <h3>Admin portal</h3>
+                <div class="header-row">
+                    <div>
+                        <h1>CK Real Estate</h1>
+                        <h3>Admin portal</h3>
+                    </div>
+
+                    <div class="logo-box">
+                        <div class="logo-ck">CK</div>
+                        <div class="logo-text">Real Estate</div>
+                    </div>
+                </div>
 
                 <div class="big-text">Manage your<br>listings here</div>
                 <div class="small-text">
