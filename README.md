@@ -115,6 +115,90 @@ Key settings in `core/settings.py`:
 - **DATABASE**: SQLite (default)
 - **TEMPLATES**: Configured to use Django template engine
 
+## 🌐 Deployment (PythonAnywhere)
+
+### 1. Clone Repository
+```bash
+git clone <repository-url>
+cd Team3_8210
+```
+
+### 2. Create & Activate Virtual Environment
+```bash
+python3.10 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Requirements
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run Migrations
+```bash
+python manage.py migrate
+```
+
+### 5. Collect Static Files
+```bash
+python manage.py collectstatic
+```
+
+### 6. Configure Web App
+
+In PythonAnywhere **Web** tab, set:
+
+**Source Code:**
+```
+/home/arunreddyy/Team3_8210
+```
+
+**WSGI Configuration File:**
+```python
+import os
+import sys
+
+path = '/home/arunreddyy/Team3_8210'
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'core.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+```
+
+### 7. Static & Media File Mapping
+
+| URL | Directory |
+|-----|-----------|
+| `/static/` | `/home/arunreddyy/Team3_8210/staticfiles` |
+| `/media/` | `/home/arunreddyy/Team3_8210/media` |
+
+### 8. Update Django Settings
+
+In `core/settings.py`, ensure these settings are configured:
+
+```python
+ALLOWED_HOSTS = ['arunreddyy.pythonanywhere.com']
+
+CSRF_TRUSTED_ORIGINS = ['https://arunreddyy.pythonanywhere.com']
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+```
+
+### 9. Reload Web App
+
+👉 Go to **Web** tab → Click **Reload**
+
+### 🌍 Live URL
+```
+https://arunreddyy.pythonanywhere.com/admin-login/
+```
+
 ## Next Steps
 
 Consider implementing:
