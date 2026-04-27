@@ -2,21 +2,197 @@
 <html>
 <head>
     <title>CK Real Estate</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        .navbar {
+            background: #27008b;
+            color: white;
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1900a8, #3b20d6);
+            color: white;
+            padding: 90px 50px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: #c9d8ff;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .hero-buttons {
+            margin-top: 35px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 8px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1900a8;
+        }
+
+        .btn-secondary {
+            background: #eeeeee;
+            color: #222;
+        }
+
+        .section {
+            padding: 55px 70px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 35px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card h3 {
+            color: #27008b;
+            margin-bottom: 12px;
+        }
+
+        .about-box {
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+            max-width: 900px;
+            margin: auto;
+            line-height: 1.7;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .footer {
+            background: #27008b;
+            color: white;
+            text-align: center;
+            padding: 22px;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
+
+<div class="navbar">
+    <div><strong>CK Real Estate</strong></div>
+    <div>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'listings_page' %}">Listings</a>
+        <a href="{% url 'omaha_page' %}">Omaha</a>
+        <a href="{% url 'admin_login' %}">Admin Login</a>
+    </div>
+</div>
+
+<div class="hero">
     <h1>Welcome to CK Real Estate</h1>
+    <p>Helping Omaha buyers and sellers find the right home with trusted local experience and personalized service.</p>
 
-    <h2>Featured Property</h2>
-    <p>Featured property will be shown here.</p>
+    <div class="hero-buttons">
+        <a href="{% url 'listings_page' %}" class="btn btn-primary">View Listings</a>
+        <a href="{% url 'omaha_page' %}" class="btn btn-secondary">Explore Omaha</a>
+    </div>
+</div>
 
-    <h2>About Carlos</h2>
-    <p>CK Real Estate serving Omaha buyers and sellers.</p>
+<div class="section">
+    <h2 class="section-title">What You Can Do</h2>
 
-    <nav>
-        <a href="/">Home</a>
-        <a href="#">Listings</a>
-        <a href="#">Omaha</a>
-        <a href="#">Contact</a>
-    </nav>
+    <div class="cards">
+        <a href="{% url 'listings_page' %}" class="card-link">
+            <div class="card">
+                <h3>Browse Properties</h3>
+                <p>View available homes and property details in the Omaha area.</p>
+            </div>
+        </a>
+
+        {% if featured_property %}
+            <a href="{% url 'property_detail' featured_property.id %}" class="card-link">
+                <div class="card">
+                    <h3>Featured Property</h3>
+                    <p>View this week’s highlighted property selected by CK Real Estate.</p>
+                </div>
+            </a>
+        {% else %}
+            <div class="card">
+                <h3>Featured Property</h3>
+                <p>No featured property is currently available.</p>
+            </div>
+        {% endif %}
+
+        <a href="{% url 'omaha_page' %}" class="card-link">
+            <div class="card">
+                <h3>Explore Omaha</h3>
+                <p>Find local events, places to visit, family activities, and restaurants.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="section">
+    <h2 class="section-title">About CK Real Estate</h2>
+
+    <div class="about-box">
+        <p>
+            CK Real Estate provides a simple and modern way for visitors to explore available properties,
+            learn about the Omaha community, and connect with realtor Carlos Kosala. The site is designed
+            to make property browsing easier while giving visitors helpful local information.
+        </p>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 CK Real Estate | Omaha, Nebraska
+</div>
+
 </body>
 </html>

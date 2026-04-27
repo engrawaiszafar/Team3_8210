@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Omaha Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .top-nav {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .top-nav a {
+            margin-left: 12px;
+            color: black;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+
+        .form-box {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 25px;
+            width: 600px;
+            margin: 0 auto 30px auto;
+            border-radius: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 18px;
+            padding: 10px 25px;
+            border-radius: 8px;
+            border: 1px solid #999;
+            cursor: pointer;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #777;
+            padding: 15px;
+            min-height: 180px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+
+        .message {
+            width: 600px;
+            margin: 10px auto;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .success {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .delete-link {
+            color: red;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <a href="/add-listing/">Add a listing</a>
+        <a href="/view-listings/">Update listing</a>
+        <a href="{% url 'update_profile' %}">Update Profile</a>
+        <a href="/logout-confirm/">Logout</a>
+    </div>
+
+    <h1>EXPLORING OMAHA</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="form-box">
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Category</label>
+            <select name="category" required>
+                <option value="">Select category</option>
+                <option value="events">Area Event</option>
+                <option value="places">Places to Visit</option>
+                <option value="family">Family Activities</option>
+                <option value="food">Places to Eat</option>
+            </select>
+
+            <label>Title</label>
+            <input type="text" name="title" placeholder="Enter title" required>
+
+            <label>Link</label>
+            <input type="url" name="link" placeholder="https://example.com" required>
+
+            <label>Description</label>
+            <textarea name="description" rows="4" placeholder="Enter description"></textarea>
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <div class="resource-grid">
+        <div class="card">
+            <h3>AREA EVENT</h3>
+            {% for item in resources %}
+                {% if item.category == "events" %}
+                    <p><strong>{{ item.title }}</strong></p>
+                    <a href="{{ item.link }}" target="_blank">{{ item.link }}</a>
+                    <p>{{ item.description }}</p>
+                    <a class="delete-link" href="{% url 'delete_omaha_resource' item.id %}">Remove</a>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="card">
+            <h3>PLACES TO VISIT</h3>
+            {% for item in resources %}
+                {% if item.category == "places" %}
+                    <p><strong>{{ item.title }}</strong></p>
+                    <a href="{{ item.link }}" target="_blank">{{ item.link }}</a>
+                    <p>{{ item.description }}</p>
+                    <a class="delete-link" href="{% url 'delete_omaha_resource' item.id %}">Remove</a>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="card">
+            <h3>FAMILY ACTIVITIES</h3>
+            {% for item in resources %}
+                {% if item.category == "family" %}
+                    <p><strong>{{ item.title }}</strong></p>
+                    <a href="{{ item.link }}" target="_blank">{{ item.link }}</a>
+                    <p>{{ item.description }}</p>
+                    <a class="delete-link" href="{% url 'delete_omaha_resource' item.id %}">Remove</a>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="card">
+            <h3>PLACES TO EAT</h3>
+            {% for item in resources %}
+                {% if item.category == "food" %}
+                    <p><strong>{{ item.title }}</strong></p>
+                    <a href="{{ item.link }}" target="_blank">{{ item.link }}</a>
+                    <p>{{ item.description }}</p>
+                    <a class="delete-link" href="{% url 'delete_omaha_resource' item.id %}">Remove</a>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

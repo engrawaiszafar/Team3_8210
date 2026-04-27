@@ -196,7 +196,7 @@
     <header>
         <div class="logo">CK Real Estate Admin</div>
         <nav>
-            <a href="#">Dashboard</a>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
             <a href="{% url 'view_listings' %}" class="active">Listings</a>
             <a href="{% url 'logout_confirm' %}">Logout</a>
         </nav>
@@ -289,6 +289,21 @@
                             <option value="True" {% if form.visibility.value|slugify == 'true' or form.visibility.value == True %}selected{% endif %}>Visible</option>
                             <option value="False" {% if form.visibility.value|slugify == 'false' or form.visibility.value == False %}selected{% endif %}>Hidden</option>
                         </select>
+                    </div>
+                    <div class="field-group">
+                        <label>Featured Property</label>
+                        <div class="radio-group">
+                            <label style="font-style: normal;">
+                                <input type="radio" name="is_featured" value="True"
+                                {% if form.is_featured.value|slugify == 'true' or form.is_featured.value == True %}checked{% endif %}>
+                                Yes
+                            </label>
+                            <label style="font-style: normal;">
+                                <input type="radio" name="is_featured" value="False"
+                                {% if form.is_featured.value|slugify == 'false' or form.is_featured.value == False %}checked{% endif %}>
+                                No
+                            </label>
+                        </div>
                     </div>
                 </div>
 
