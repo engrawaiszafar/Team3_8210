@@ -79,3 +79,13 @@ class AgentProfile(models.Model):
 
     def __str__(self):
         return self.name
+
+class SearchLog(models.Model):
+    home_type = models.CharField(max_length=50, blank=True, null=True)
+    neighborhood = models.CharField(max_length=100, blank=True, null=True)
+    min_price = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    max_price = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Search on {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
