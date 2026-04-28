@@ -1,22 +1,436 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Property Detail</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ property.address }} - Property Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1900a8;
+            --primary-light: #79c7ff;
+            --dark: #1a1a1a;
+            --grey: #666666;
+            --light-grey: #f4f4f9;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--light-grey);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateX(-5px);
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            background: #28a745;
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .status-sold {
+            background: #dc3545;
+        }
+
+        /* Gallery Section */
+        .gallery-container {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .main-image-wrapper {
+            width: 100%;
+            height: 600px;
+            border-radius: calc(var(--radius) - 4px);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .main-image-wrapper:hover .main-image {
+            transform: scale(1.03);
+        }
+
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .thumbnail {
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail:hover, .thumbnail.active {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Details Section */
+        .property-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 992px) {
+            .property-info {
+                grid-template-columns: 1fr;
+            }
+            .main-image-wrapper {
+                height: 400px;
+            }
+        }
+
+        .info-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .price-tag {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0 0 10px 0;
+        }
+
+        .address-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 0 5px 0;
+        }
+
+        .location-sub {
+            font-size: 18px;
+            color: var(--grey);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--light-grey);
+        }
+
+        @media (max-width: 576px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .feature-badge {
+            background: var(--light-grey);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-badge:hover {
+            transform: translateY(-5px);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .feature-badge span {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .feature-badge strong {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .feature-badge p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--grey);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .description-text {
+            font-size: 18px;
+            color: var(--dark);
+            white-space: pre-wrap;
+        }
+
+        /* Sidebar */
+        .sidebar-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 40px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--light-grey);
+        }
+
+        .sidebar-item:last-child {
+            border: none;
+        }
+
+        .sidebar-item span {
+            color: var(--grey);
+        }
+
+        .sidebar-item strong {
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Outfit', sans-serif;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(25, 0, 168, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ property.address }}</h1>
+    <div class="container">
+        <div class="nav-header">
+            <a href="{% url 'listings_page' %}" class="back-btn">
+                ← Back to Listings
+            </a>
+            <span class="status-badge {% if property.status == 'Sold' %}status-sold{% endif %}">
+                {{ property.status }}
+            </span>
+        </div>
 
-    {% if property.images.first %}
-        <img src="{{ property.images.first.image.url }}" style="width:400px;">
-    {% endif %}
+        <!-- Gallery Section -->
+        <div class="gallery-container">
+            <div class="main-image-wrapper">
+                {% if property.images.first %}
+                    <img src="{{ property.images.first.image.url }}" id="mainDisplay" class="main-image" alt="{{ property.address }}">
+                {% else %}
+                    <img src="/static/images/placeholder.jpg" id="mainDisplay" class="main-image" alt="No image available">
+                {% endif %}
+            </div>
 
-    <p><strong>Price:</strong> ${{ property.price }}</p>
-    <p><strong>Type:</strong> {{ property.home_type }}</p>
-    <p><strong>Location:</strong> {{ property.city }}, {{ property.state }} {{ property.zip_code }}</p>
-    <p><strong>Bedrooms:</strong> {{ property.bedrooms }}</p>
-    <p><strong>Bathrooms:</strong> {{ property.bathrooms }}</p>
-    <p>{{ property.description }}</p>
+            {% if property.images.all.count > 1 %}
+                <div class="thumbnail-grid">
+                    {% for img in property.images.all %}
+                        <div class="thumbnail {% if forloop.first %}active{% endif %}" onclick="changeImage('{{ img.image.url }}', this)">
+                            <img src="{{ img.image.url }}" alt="Thumbnail for {{ property.address }}">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-    <a href="{% url 'listings_page' %}">Back to Listings</a>
+        <!-- Details Section -->
+        <div class="property-info">
+            <div class="info-card">
+                <p class="price-tag">${{ property.price }}</p>
+                <h1 class="address-title">{{ property.address }}</h1>
+                <div class="location-sub">
+                    📍 {{ property.neighborhood }}, {{ property.city }}, {{ property.state }} {{ property.zip_code }}
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="features-grid">
+                    <div class="feature-badge">
+                        <span>🛏️</span>
+                        <strong>{{ property.bedrooms }}</strong>
+                        <p>Bedrooms</p>
+                    </div>
+                    <div class="feature-badge">
+                        <span>🛁</span>
+                        <strong>{{ property.bathrooms }}</strong>
+                        <p>Bathrooms</p>
+                    </div>
+                    <div class="feature-badge">
+                        <span>🚗</span>
+                        <strong>{{ property.garage }}</strong>
+                        <p>Garage</p>
+                    </div>
+                    <div class="feature-badge">
+                        <span>📅</span>
+                        <strong>{{ property.year_built }}</strong>
+                        <p>Year Built</p>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Description</h2>
+                <div class="description-text">
+                    {{ property.description }}
+                </div>
+            </div>
+
+            <!-- Sidebar Info -->
+            <div class="sidebar-card">
+                <h3 style="margin-top: 0; margin-bottom: 20px; color: var(--primary);">Property Overview</h3>
+                <div class="sidebar-item">
+                    <span>Home Type</span>
+                    <strong>{{ property.home_type }}</strong>
+                </div>
+                <div class="sidebar-item">
+                    <span>City</span>
+                    <strong>{{ property.city }}</strong>
+                </div>
+                <div class="sidebar-item">
+                    <span>State</span>
+                    <strong>{{ property.state }}</strong>
+                </div>
+                <div class="sidebar-item">
+                    <span>Neighborhood</span>
+                    <strong>{{ property.neighborhood }}</strong>
+                </div>
+                <div class="sidebar-item">
+                    <span>Zip Code</span>
+                    <strong>{{ property.zip_code }}</strong>
+                </div>
+            </div>
+
+            <!-- Contact Form Card -->
+            <div class="sidebar-card" style="margin-top: 30px; position: static;" id="contact-card">
+                <h3 style="margin-top: 0; margin-bottom: 20px; color: var(--primary);">Contact Carlos</h3>
+                
+                {% if success_message %}
+                    <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600;">
+                        {{ success_message }}
+                    </div>
+                {% endif %}
+
+                <form method="POST" action=".">
+                    {% csrf_token %}
+                    <div style="margin-bottom: 15px;">
+                        {{ form.name }}
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        {{ form.email }}
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        {{ form.message }}
+                    </div>
+                    <button type="submit" style="width: 100%; padding: 14px; background: var(--primary); color: var(--white); border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.3s;">
+                        Send Inquiry
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function changeImage(src, thumbElement) {
+            document.getElementById('mainDisplay').src = src;
+            
+            // Remove active class from all thumbnails
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            thumbElement.classList.add('active');
+        }
+    </script>
 </body>
 </html>

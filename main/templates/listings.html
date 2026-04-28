@@ -51,6 +51,89 @@
             text-decoration: none;
             border-radius: 6px;
         }
+
+        .filter-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin: 0 30px 30px 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .filter-group input, .filter-group select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .filter-group input:focus, .filter-group select:focus {
+            border-color: #1900a8;
+        }
+
+        .filter-btn, .reset-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .filter-btn {
+            background: #1900a8;
+            color: white;
+            border: none;
+        }
+
+        .filter-btn:hover {
+            background: #27008b;
+        }
+
+        .reset-btn {
+            background: white;
+            border: 2px solid #1900a8;
+            color: #1900a8;
+        }
+
+        .reset-btn:hover {
+            background: #1900a8;
+            color: white;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            background: white;
+            border-radius: 12px;
+            font-size: 18px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -59,11 +142,46 @@
     <div><strong>CK Real Estate</strong></div>
     <div>
         <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'agent_profile' %}">Agent Profile</a>
         <a href="{% url 'omaha_page' %}">Omaha</a>
     </div>
 </div>
 
 <h1>AVAILABLE PROPERTIES</h1>
+
+<div class="filter-card">
+    <form method="GET" action="." style="display: flex; gap: 15px; flex-wrap: wrap; width: 100%; align-items: flex-end;">
+        <div class="filter-group">
+            <label for="home_type">Home Type</label>
+            <select name="home_type" id="home_type">
+                <option value="">All Types</option>
+                {% for type in available_home_types %}
+                    <option value="{{ type }}" {% if filters.home_type == type %}selected{% endif %}>{{ type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="neighborhood">Neighborhood</label>
+            <input type="text" name="neighborhood" id="neighborhood" placeholder="e.g. Dundee" value="{{ filters.neighborhood }}">
+        </div>
+
+        <div class="filter-group">
+            <label for="min_price">Min Price</label>
+            <input type="number" name="min_price" id="min_price" placeholder="Min $" value="{{ filters.min_price }}">
+        </div>
+
+        <div class="filter-group">
+            <label for="max_price">Max Price</label>
+            <input type="number" name="max_price" id="max_price" placeholder="Max $" value="{{ filters.max_price }}">
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" class="filter-btn">Search</button>
+            <a href="{% url 'listings_page' %}" class="reset-btn">Clear</a>
+        </div>
+    </form>
+</div>
 
 <div class="grid">
     {% for property in properties %}
@@ -88,7 +206,9 @@
             <a href="{% url 'property_detail' property.pk %}" class="detail-link">View Full Details</a>
         </div>
     {% empty %}
-        <p>No listings available</p>
+        <div class="no-results">
+            <p>😞 No properties found matching your search criteria.</p>
+        </div>
     {% endfor %}
 </div>
 

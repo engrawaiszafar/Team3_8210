@@ -144,9 +144,42 @@
             font-size: 14px;
             font-weight: normal;
         }
+
+        .top-nav {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: #ffffff;
+            border: 2px solid #1900a8;
+            color: #1900a8;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #1900a8;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(25, 0, 168, 0.2);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
+    <div class="top-nav">
+        <a href="{% url 'home' %}" class="nav-btn">Home</a>
+        <a href="{% url 'listings_page' %}" class="nav-btn">Listings</a>
+        <a href="{% url 'omaha_page' %}" class="nav-btn">Omaha</a>
+    </div>
     <div class="container">
         <div class="left-panel">
             <div>
