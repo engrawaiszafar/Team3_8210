@@ -315,4 +315,38 @@ def agent_profile(request):
             email='info.carlos@ckrealestate.com',
             biography='Carlos Kosala is a real estate professional serving the Omaha area.',
         )
-    return render(request, 'agent_profile.html', {'profile': profile})
+        
+    success_message = None
+    error_message = None
+    
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            
+            try:
+                subject = f"General Inquiry from {name}"
+                email_body = f"Visitor Details:\nName: {name}\nEmail: {email}\n\nMessage:\n{message}"
+                
+                send_mail(
+                    subject,
+                    email_body,
+                    email,
+                    [profile.email],
+                    fail_silently=False,
+                )
+                success_message = "Your inquiry has been sent successfully!"
+                form = ContactForm() 
+            except Exception:
+                error_message = "Oops! The email could not be sent. Please try again later."
+    else:
+        form = ContactForm()
+
+    return render(request, 'agent_profile.html', {
+        'profile': profile,
+        'form': form,
+        'success_message': success_message,
+        'error_message': error_message
+    })
