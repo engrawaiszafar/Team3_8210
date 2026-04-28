@@ -303,3 +303,16 @@ def home(request):
     return render(request, 'home.html', {
         'featured_property': featured_property
     })
+
+def agent_profile(request):
+    profile = AgentProfile.objects.first()
+    if not profile:
+        profile = AgentProfile.objects.create(
+            name='Carlos Kosala',
+            office_address='CK Real Estate\n10671 Eden Park Street, Room 101\nOmaha, NE 68114',
+            phone='(402) 558-6210',
+            website='https://www.ckrealestate.com',
+            email='info.carlos@ckrealestate.com',
+            biography='Carlos Kosala is a real estate professional serving the Omaha area.',
+        )
+    return render(request, 'agent_profile.html', {'profile': profile})
