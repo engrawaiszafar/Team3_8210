@@ -66,6 +66,7 @@
 
 <h1>EXPLORE OMAHA</h1>
 
+{% if resources %}
 <div class="grid">
 
     <!-- EVENTS -->
@@ -78,8 +79,6 @@
                 <p>{{ item.description }}</p>
                 <hr>
             {% endif %}
-        {% empty %}
-            <p>No data available</p>
         {% endfor %}
     </div>
 
@@ -123,6 +122,11 @@
     </div>
 
 </div>
+{% else %}
+<div style="text-align: center; padding: 50px; font-size: 18px; color: #666;">
+    <p>😞 No Omaha area resources are currently available.</p>
+</div>
+{% endif %}
 
 </body>
 </html>

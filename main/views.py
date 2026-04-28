@@ -291,7 +291,26 @@ def seed_dummy_properties(request):
         )
         created_count += 1
 
-    return HttpResponse(f"Successfully added {created_count} dummy properties! Feel free to visit the listings page.")
+    from .models import OmahaResource
+    
+    resources_data = [
+        {"title": "Omaha Summer Arts Festival", "category": "events", "link": "https://www.omahaarts.com", "description": "Annual arts and music gathering."},
+        {"title": "Henry Doorly Zoo", "category": "places", "link": "https://www.omahazoo.com", "description": "World-class zoo and aquarium."},
+        {"title": "Lauritzen Gardens", "category": "places", "link": "https://www.lauritzengardens.org", "description": "Stunning botanical displays."},
+        {"title": "Joslyn Art Museum", "category": "places", "link": "https://www.joslyn.org", "description": "Premier fine arts collection."},
+        {"title": "Fun-Plex Waterpark", "category": "family", "link": "https://fun-plex.com", "description": "Rides, water slides, and go-karts."},
+        {"title": "The Durham Museum", "category": "family", "link": "https://durhammuseum.org", "description": "Historic union station museum."},
+        {"title": "Block 16", "category": "food", "link": "https://block16omaha.com", "description": "Street style farm-to-table burgers."},
+        {"title": "Gorat's Steak House", "category": "food", "link": "https://goratsomaha.com", "description": "Classic local Omaha steak tradition."}
+    ]
+    
+    res_created = 0
+    for res in resources_data:
+        if not OmahaResource.objects.filter(title=res["title"]).exists():
+            OmahaResource.objects.create(**res)
+            res_created += 1
+
+    return HttpResponse(f"Successfully added {created_count} properties and {res_created} Omaha resources!")
 
 def home(request):
     featured_property = Property.objects.filter(
