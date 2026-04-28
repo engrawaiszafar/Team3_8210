@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Explore Omaha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f4f4;
+        }
+
+        .topbar {
+            background: #27008b;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            border: 1px solid #777;
+            min-height: 200px;
+        }
+
+        .card h3 {
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        a {
+            color: blue;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div><strong>CK Real Estate</strong></div>
+    <div>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'view_listings' %}">Listings</a>
+    </div>
+</div>
+
+<h1>EXPLORE OMAHA</h1>
+
+<div class="grid">
+
+    <!-- EVENTS -->
+    <div class="card">
+        <h3>AREA EVENT</h3>
+        {% for item in resources %}
+            {% if item.category == "events" %}
+                <p><strong>{{ item.title }}</strong></p>
+                <a href="{{ item.link }}" target="_blank">{{ item.link }}</a>
+                <p>{{ item.description }}</p>
+                <hr>
+            {% endif %}
+        {% empty %}
+            <p>No data available</p>
+        {% endfor %}
+    </div>
+
+    <!-- PLACES -->
+    <div class="card">
+        <h3>PLACES TO VISIT</h3>
+        {% for item in resources %}
+            {% if item.category == "places" %}
+                <p><strong>{{ item.title }}</strong></p>
+                <a href="{{ item.link }}" target="_blank">{{ item.link }}</a>
+                <p>{{ item.description }}</p>
+                <hr>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- FAMILY -->
+    <div class="card">
+        <h3>FAMILY ACTIVITIES</h3>
+        {% for item in resources %}
+            {% if item.category == "family" %}
+                <p><strong>{{ item.title }}</strong></p>
+                <a href="{{ item.link }}" target="_blank">{{ item.link }}</a>
+                <p>{{ item.description }}</p>
+                <hr>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- FOOD -->
+    <div class="card">
+        <h3>PLACES TO EAT</h3>
+        {% for item in resources %}
+            {% if item.category == "food" %}
+                <p><strong>{{ item.title }}</strong></p>
+                <a href="{{ item.link }}" target="_blank">{{ item.link }}</a>
+                <p>{{ item.description }}</p>
+                <hr>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>

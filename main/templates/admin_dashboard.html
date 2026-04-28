@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard - Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
+        .topbar { background: #27008b; color: white; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; }
+        .topbar a { color: white; margin-left: 20px; text-decoration: none; font-weight: bold; }
+        .subnav { padding: 18px 32px; background: white; border-bottom: 1px solid #ddd; }
+        .subnav a { color: black; margin-right: 30px; }
+        .container { margin: 35px; background: white; border: 1px solid #777; padding: 35px; }
+        .profile-layout { display: grid; grid-template-columns: 1fr 280px; gap: 40px; }
+        .portrait-box { border: 1px solid #777; width: 260px; height: 220px; display: flex; align-items: center; justify-content: center; }
+        .portrait-box img { max-width: 100%; max-height: 100%; object-fit: cover; }
+        .edit-btn { display: inline-block; margin-top: 25px; padding: 10px 30px; background: #eee; border: 1px solid #999; border-radius: 20px; color: black; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div><strong>CK Real Estate</strong> &nbsp; ADMIN PORTAL</div>
+    <div>
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{% url 'view_listings' %}">Listings</a>
+        <a href="{% url 'logout_confirm' %}">Logout</a>
+    </div>
+</div>
+
+<div class="subnav">
+    <a href="{% url 'add_listing' %}">Add a listing</a>
+    <a href="{% url 'view_listings' %}">Update listing</a>
+    <a href="{% url 'manage_omaha' %}">Update Omaha Page</a>
+    <a href="{% url 'update_profile' %}">Update Profile</a>
+</div>
+
+<div class="container">
+    <h1>PERSONAL PROFILE</h1>
+
+    <div class="profile-layout">
+        <div>
+            <h2>{{ profile.name }}</h2>
+
+            <p><strong>Office Address:</strong><br>
+                {{ profile.office_address|linebreaksbr }}
+            </p>
+
+            <p><strong>Phone:</strong> {{ profile.phone }}</p>
+
+            <p><strong>Website:</strong>
+                <a href="{{ profile.website }}" target="_blank">{{ profile.website }}</a>
+            </p>
+
+            <p><strong>Email:</strong> {{ profile.email }}</p>
+
+            <p><strong>Biography:</strong><br>
+                {{ profile.biography }}
+            </p>
+
+            <a href="{% url 'update_profile' %}" class="edit-btn">Edit Profile</a>
+        </div>
+
+        <div>
+            <div class="portrait-box">
+                {% if profile.portrait %}
+                    <img src="{{ profile.portrait.url }}" alt="Portrait">
+                {% else %}
+                    Portrait
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

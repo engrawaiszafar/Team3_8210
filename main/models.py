@@ -34,6 +34,7 @@ class Property(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Active')
     visibility = models.BooleanField(default=True)
+    is_featured = models.BooleanField(default=False)
     description = models.TextField()
     bedrooms = models.PositiveIntegerField()
     bathrooms = models.PositiveIntegerField()
@@ -50,3 +51,31 @@ class PropertyImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.property.address}"
+
+class OmahaResource(models.Model):
+    CATEGORY_CHOICES = [
+        ('events', 'Area Event'),
+        ('places', 'Places to Visit'),
+        ('family', 'Family Activities'),
+        ('food', 'Places to Eat'),
+    ]
+
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    title = models.CharField(max_length=100)
+    link = models.URLField()
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.title} - {self.category}"
+
+class AgentProfile(models.Model):
+    name = models.CharField(max_length=100, default="Carlos Kosala")
+    office_address = models.TextField()
+    phone = models.CharField(max_length=20)
+    website = models.URLField(blank=True)
+    email = models.EmailField()
+    biography = models.TextField(blank=True)
+    portrait = models.ImageField(upload_to='agent_portraits/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name

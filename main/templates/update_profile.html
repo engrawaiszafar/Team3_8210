@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
+        .topbar { background: #27008b; color: white; padding: 16px 32px; display: flex; justify-content: space-between; }
+        .topbar a { color: white; margin-left: 20px; text-decoration: none; font-weight: bold; }
+        .container { margin: 35px auto; background: white; border: 1px solid #777; padding: 35px; max-width: 900px; }
+        label { font-weight: bold; display: block; margin-top: 14px; }
+        input, textarea { width: 100%; padding: 10px; margin-top: 6px; box-sizing: border-box; }
+        .save-btn { margin-top: 24px; padding: 10px 40px; border-radius: 20px; border: 1px solid #999; cursor: pointer; }
+        .portrait { margin-top: 20px; }
+        .portrait img { max-width: 180px; border: 1px solid #aaa; padding: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div><strong>CK Real Estate</strong> ADMIN PORTAL</div>
+    <div>
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{% url 'view_listings' %}">Listings</a>
+        <a href="{% url 'manage_omaha' %}">Update Omaha Page</a>
+        <a href="{% url 'logout_confirm' %}">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Update Profile</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        {% if profile.portrait %}
+            <div class="portrait">
+                <p><strong>Current Portrait:</strong></p>
+                <img src="{{ profile.portrait.url }}" alt="Agent Portrait">
+            </div>
+        {% endif %}
+
+        <button type="submit" class="save-btn">Save Profile</button>
+    </form>
+</div>
+
+</body>
+</html>

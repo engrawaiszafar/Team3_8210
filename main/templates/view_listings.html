@@ -214,7 +214,7 @@
             <span>Admin Portal</span>
         </div>
         <nav class="nav-links">
-            <a href="#">Dashboard</a>
+            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
             <a href="{% url 'view_listings' %}" style="color: var(--primary-light);">Listings</a>
             <a href="{% url 'logout_confirm' %}">Logout</a>
         </nav>
@@ -223,8 +223,8 @@
     <div class="sub-nav">
         <div class="sub-nav-links">
             <a href="{% url 'add_listing' %}">Add a listing</a>
-            <a href="#">Update Omaha Page</a>
-            <a href="#">Update Profile</a>
+            <a href="{% url 'manage_omaha' %}">Update Omaha Page</a>
+            <a href="{% url 'update_profile' %}">Update Profile</a>
         </div>
         <a href="{% url 'add_listing' %}" class="btn-add">+ Create New</a>
     </div>
@@ -243,6 +243,7 @@
                         <th>Home Type</th>
                         <th>Status</th>
                         <th>Visibility</th>
+                        <th>Featured</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -259,12 +260,22 @@
                                 </span>
                             </td>
                             <td>{{ property.visibility|yesno:"Visible,Hidden" }}</td>
-                            <td><a href="{% url 'edit_listing' property.pk %}" class="btn-edit">Edit Listing</a></td>
+                            <td>
+                                {% if property.is_featured %}
+                                    ⭐ Featured
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a href="{% url 'edit_listing' property.pk %}" class="btn-edit">Edit Listing</a>
+                            </td>
                         </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="6" style="text-align: center; padding: 40px; color: #777;">
+                            <td colspan="7" style="text-align: center; padding: 40px; color: #777;">
                                 No listings found. Click "+ Create New" to add one.
                             </td>
                         </tr>
