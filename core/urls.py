@@ -23,6 +23,7 @@ urlpatterns = [
     path('omaha/', views.omaha_page, name='omaha_page'),
     path('listings/', views.listings_page, name='listings_page'),
     path('property/<int:pk>/', views.property_detail, name='property_detail'),
+    path('listings/', views.listings_page, name='listings_page'),
 ]
 
 if settings.DEBUG:
